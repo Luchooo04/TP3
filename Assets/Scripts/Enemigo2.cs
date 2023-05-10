@@ -4,35 +4,55 @@ using UnityEngine;
 
 public class Enemigo2 : MonoBehaviour
 {
-    
+    [SerializeField]
+    private Transform _target;
 
-    public float rangoAlerta;
-    public LayerMask capaJugador;
-    bool estarAlerta;
-    public Transform jugador;
-    public float velocidad;
+    [SerializeField]
+    private GameObject _bulletPrefab;
 
-    void Start()
+    [SerializeField]
+    private float balaSpeed = 10f;
+
+    [SerializeField]
+    private Transform _spawnPoint;
+
+    [SerializeField]
+    private float _fireRate = 2f;
+
+    private float _fireTimer = 0f;
+
+    [SerializeField]
+    private float balaLifetime = 5f;
+
+    private void Update()
     {
-        
+        // Apuntar hacia el objetivo
+        Vector3 targetOrientation = _target.position - transform.position;
+        Quaternion targetOrientationQuaternion = Quaternion.LookRotation(targetOrientation);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetOrientationQuaternion, Time.deltaTime);
+
+        // Disparar si se ha cumplido el tiempo de espera
+        _fireTimer += Time.deltaTime;
+        if (_fireTimer >= _fireRate)
+        {
+            _fireTimer = 1f;
+            Disparar();
+        }
     }
 
-    void Update()
+    private void Disparar()
     {
-        //estarAlerta = Physics.CheckSphere(transform.position, rangoAlerta, capaJugador);
+        // Instanciar la bala y apuntar hacia el objetivo
+        //GameObject bulletObject = Instantiate(_bulletPrefab, _spawnPoint.position, Quaternion.identity);
+        //Vector3 targetOrientation = _target.position - _spawnPoint.position;
+        //Quaternion targetOrientationQuaternion = Quaternion.LookRotation(targetOrientation);
+        //bulletObject.transform.rotation = targetOrientationQuaternion;
+        GameObject balaGO = Instantiate(_bulletPrefab, _spawnPoint.position, Quaternion.identity);
+        Vector3 targetOrientation = _target.position - _spawnPoint.position;
+        Quaternion targetOrientationQuaternion = Quaternion.LookRotation(targetOrientation);
+        Rigidbody balaRB = balaGO.GetComponent<Rigidbody>();
+        balaRB.velocity = (_target.position - transform.position).normalized * balaSpeed;
 
-        //if (estarAlerta == true)
-        //{
-        //    Vector2 posJugador = new Vector2(jugador.position.x, transform.position.y, jugador.position.z);
-        //    transform.LookAt(posJugador);
-        //    transform.position = Vector2.MoveTowards(transform.position, posJugador, velocidad * Time.deltaTime);
-        //}
-
-    }
-
-    private void OnDrawGizmos() 
-    {
-        Gizmos.DrawWireSphere(transform.position, rangoAlerta);
-    
+        Destroy(balaGO, balaLifetime);
     }
 }

@@ -1385,7 +1385,7 @@ GameObject:
   - component: {fileID: 651090623}
   - component: {fileID: 651090624}
   m_Layer: 0
-  m_Name: Enemigo2
+  m_Name: Enemigo3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1462,13 +1462,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 651090617}
   m_LocalRotation: {x: -0, y: 0.7019356, z: -0, w: 0.71224046}
-  m_LocalPosition: {x: 6.1, y: 9.04, z: 0.06}
+  m_LocalPosition: {x: 6.7, y: 2.14, z: -41.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 887677176}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 89.165, z: 0}
 --- !u!54 &651090623
 Rigidbody:
@@ -1482,7 +1482,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
@@ -1498,11 +1498,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556f3abe9947e294f8a2d62c3c6d4f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidad: 1
+  velocidad: 6
   controladorSuelo: {fileID: 887677176}
-  distancia: 3.49
+  distancia: 2.95
   movimientoDerecha: 1
-  rangoDeteccion: 5.46
+  rangoDeteccion: 6.47
 --- !u!1 &662819182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,9 +1515,9 @@ GameObject:
   - component: {fileID: 662819186}
   - component: {fileID: 662819185}
   - component: {fileID: 662819184}
-  - component: {fileID: 662819188}
+  - component: {fileID: 662819189}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: TorretaEnemiga
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1602,7 +1602,7 @@ Transform:
   m_Father: {fileID: 876436930}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &662819188
+--- !u!114 &662819189
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1611,10 +1611,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 662819182}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 988dcc24f6956c743963aa92a16b72c9, type: 3}
+  m_Script: {fileID: 11500000, guid: b06331d4cd938e0419b51470682adda0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 723618162}
+  _bulletPrefab: {fileID: 6680748996830497378, guid: 69d3d868139af22438e4ba07dd7e4866,
+    type: 3}
+  balaSpeed: 10
+  _spawnPoint: {fileID: 1459153991}
+  _fireRate: 1.2
+  balaLifetime: 2
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1804,7 +1810,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &829122440
 GameObject:
@@ -2137,7 +2143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 876436930}
   m_Layer: 0
-  m_Name: TorretaEnemiga
+  m_Name: Enemigo2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2157,7 +2163,7 @@ Transform:
   m_Children:
   - {fileID: 662819187}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &887677175
 GameObject:
@@ -2823,7 +2829,7 @@ GameObject:
   - component: {fileID: 1349283177}
   - component: {fileID: 1349283176}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: "Ca\xF1on"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2840,7 +2846,8 @@ Transform:
   m_LocalPosition: {x: -0.08, y: 0, z: 0.41}
   m_LocalScale: {x: 0.67296, y: 0.67296, z: 0.67296}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1459153991}
   m_Father: {fileID: 662819187}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3003,12 +3010,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393156521}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.32, y: 5.87, z: 0.2}
+  m_LocalPosition: {x: 5.32, y: -0.97, z: -40.86}
   m_LocalScale: {x: 7.9063406, y: 0.89290506, z: 1.221}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1431172339
 Mesh:
@@ -3016,7 +3023,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2432
+  m_Name: pb_Mesh20576
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3174,6 +3181,37 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1459153990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1459153991}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1459153991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459153990}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.39}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1349283175}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1485302898
 GameObject:
   m_ObjectHideFlags: 0
