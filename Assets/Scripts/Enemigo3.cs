@@ -1,78 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemigo3 : MonoBehaviour
 {
-    [SerializeField] private float velocidad;
-    [SerializeField] private Transform controladorSuelo;
-    [SerializeField] private float distancia;
-    [SerializeField] private bool movimientoDerecha;
+    public float rangoDeVision = 10f;
+    public float velocidadOrbita = 2f;
+    public float distanciaOrbita = 3f;
 
-    private Rigidbody rb;
-    private Transform player;
-    private bool detectedPlayer = false;
-    [SerializeField] private float rangoDeteccion;
+
+    private Transform _jugador;
+    private Rigidbody _rb;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-    }
-
-    private void FixedUpdate()
-    {
-        if (!detectedPlayer)
-        {
-            RaycastHit informacionSuelo;
-            if (Physics.Raycast(controladorSuelo.position, Vector3.down, out informacionSuelo, distancia))
-            {
-                rb.velocity = new Vector2(velocidad, rb.velocity.y);
-            }
-            else
-            {
-                Girar();
-            }
-        }
-        else
-        {
-            Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, player.position.z);
-            if (targetPosition.x < transform.position.x)
-            {
-                velocidad = -Mathf.Abs(velocidad);
-            }
-            else
-            {
-                velocidad = Mathf.Abs(velocidad);
-            }
-
-            rb.velocity = (targetPosition - transform.position).normalized * velocidad;
-        }
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        if (Vector3.Distance(transform.position, player.position) < rangoDeteccion)
+        if (_jugador != null)
         {
-            detectedPlayer = true;
+            // Si el jugador sigue dentro del rango de visión, seguir orbitando
+            if (Vector3.Distance(transform.position, _jugador.position) < rangoDeVision)
+            {
+                transform.LookAt(_jugador);
+                transform.RotateAround(_jugador.position, Vector3.up, velocidadOrbita * Time.deltaTime);
+                transform.position = _jugador.position + transform.forward * -distanciaOrbita;
+                _rb.MovePosition(transform.position);
+            }
+            // Si el jugador se aleja del rango de visión, dejar de orbitar
+            else
+            {
+                _jugador = null;
+            }
         }
-    }
-
-    private void Girar()
-    {
-        movimientoDerecha = !movimientoDerecha;
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
-        velocidad *= -1;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        if (controladorSuelo != null)
+        else
         {
-            Gizmos.DrawLine(controladorSuelo.transform.position, controladorSuelo.transform.position + Vector3.down * distancia);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, rangoDeVision);
+            foreach (Collider collider in colliders)
+            {
+                if (collider.gameObject.CompareTag("Player"))
+                {
+                    _jugador = collider.transform;
+                    break;
+                }
+            }
         }
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, rangoDeteccion);
     }
 }

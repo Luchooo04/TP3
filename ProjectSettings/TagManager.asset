@@ -9,6 +9,7 @@ TagManager:
   - Target
   - Trampoline
   - Obstaculo
+  - Enemy
   layers:
   - Default
   - TransparentFX
